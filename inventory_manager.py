@@ -1,41 +1,55 @@
-envanter={}
-def esya_ekle(isim,adet):
-    if isim in envanter:
-        envanter[isim]+=adet
-        print(f"{isim} güncellendi. Yeni miktar {envanter[isim]}")
+# --- Inventory Management System Pro ---
+# Developer: [Your Name]
+# Topic: Dictionaries, Functions and CRUD Operations
+
+inventory = {}
+
+def add_item(name, quantity):
+    """Adds an item to the inventory or updates its quantity."""
+    if name in inventory:
+        inventory[name] += quantity
+        print(f"🔄 {name} updated. New quantity: {inventory[name]}")
     else:
-        envanter[isim]=adet
-        print(f"{isim} envantere eklendi.")
-def esya_sil(isim):
-    if isim in envanter:
-        envanter.pop(isim)
-        print(f"{isim} silindi.")
+        inventory[name] = quantity
+        print(f"✨ {name} added to inventory.")
+
+def remove_item(name):
+    """Safely removes an item from the inventory."""
+    if name in inventory:
+        inventory.pop(name)
+        print(f"🗑️ {name} removed.")
     else:
-        print(f"Hata: {isim} bulunamadı.")
-def envanter_goster():
-    if not envanter:
-        print("Envanter boş.")
+        print(f"⚠️ Error: {name} not found.")
+
+def display_inventory():
+    """Lists all items in the current inventory."""
+    print("\n--- 🎒 CURRENT INVENTORY ---")
+    if not inventory:
+        print("Bag is empty.")
     else:
-        for urun,miktar in envanter.items():
-            print(f"- {urun}:{miktar} adet")
+        for item, quantity in inventory.items():
+            print(f"- {item}: {quantity}")
+    print("-------------------------")
+
 def main():
     while True:
-        print(f"\n1- Ekle | 2- Sil | 3- Listele | Q- Çıkış")
-        secim=input("Lütfen seçiminizi yapiniz.").lower()
+        print("\n1- Add | 2- Remove | 3- List | Q- Exit")
+        choice = input("Select an action: ").lower()
 
-        if secim=="1":
-            ad=input("Eşya adını giriniz: ")
-            sayi=int(input("Adet: "))
-            esya_ekle(ad,sayi)
-        elif secim=="2":
-            ad=input("Silinecek eşya adi: ")
-            esya_sil(ad)    
-        elif secim=="3":
-            envanter_goster()
-        elif secim=="q":
-            print("Sistemden çıkılıyor. İyi yolculuklar.")
+        if choice == "1":
+            name = input("Item name: ")
+            qty = int(input("Quantity: "))
+            add_item(name, qty)
+        elif choice == "2":
+            name = input("Item name to remove: ")
+            remove_item(name)
+        elif choice == "3":
+            display_inventory()
+        elif choice == "q":
+            print("Exiting system... Goodbye!")
             break
         else:
-            print("Geçersiz seçim")
+            print("❌ Invalid choice!")
+
 if __name__ == "__main__":
     main()
